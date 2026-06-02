@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>토마토서비스</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Noto Sans KR', sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: white;
+      color: #333;
+    }
+
+    .hero {
+      height: 100vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      padding: 0 7%;
+      overflow: hidden;
+      background: white;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      color: black;
+      animation: slideIn 1.7s ease;
+    }
+
+    .hero-image {
+      position: absolute;
+      right: -900px;
+      top: 40%;
+      transform: translateY(-50%);
+      z-index: 1;
+      animation: slideRight 1.8s ease;
+    }
+
+    .hero-image img {
+      width: 2000px;
+      opacity: .45;
+      filter: blur(2px);
+    }
+
+    .big-title {
+      font-size: 11vw;
+      font-weight: 900;
+      line-height: .85;
+      letter-spacing: -7px;
+      color: black;
+    }
+
+    .subtitle {
+      font-size: 22px;
+      color: #666;
+      margin-top: 35px;
+      margin-left: 8px;
+    }
+
+    .hero-content button {
+      margin-top: 40px;
+      padding: 15px 35px;
+      border: none;
+      border-radius: 50px;
+      background: black;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+      transition: .3s;
+    }
+
+    .hero-content button:hover {
+      transform: translateY(-4px);
+      background: #ff3131;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      background: white;
+      padding: 18px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, .1);
+      z-index: 999;
+      text-align: center;
+    }
+
+    nav a {
+      text-decoration: none;
+      margin: 0 20px;
+      font-size: 18px;
+      font-weight: bold;
+      color: black;
+      transition: .3s;
+    }
+
+    nav a:hover {
+      color: #ff3131;
+    }
+
+    section {
+      padding: 100px 12%;
+    }
+
+    h2 {
+      font-size: 40px;
+      margin-bottom: 20px;
+    }
+
+    .description {
+      font-size: 18px;
+      line-height: 1.8;
+    }
+
+    .card-wrap {
+      display: flex;
+      gap: 25px;
+      flex-wrap: wrap;
+      margin-top: 40px;
+    }
+
+    .card {
+      flex: 1;
+      min-width: 250px;
+      padding: 35px;
+      border-radius: 30px;
+      background: white;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, .08);
+      transition: .4s;
+    }
+
+    .card:hover {
+      transform: translateY(-15px);
+    }
+
+    .card h3 {
+      margin-bottom: 15px;
+    }
+
+    .join {
+      text-align: center;
+    }
+
+    .join button {
+      margin-top: 30px;
+      padding: 18px 40px;
+      border: none;
+      border-radius: 50px;
+      background: black;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    footer {
+      padding: 40px;
+      background: black;
+      color: white;
+      text-align: center;
+    }
+
+    .poster-section {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 80px;
+      flex-wrap: wrap;
+      padding: 120px 12%;
+    }
+
+    .poster-text {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .poster-text h2 {
+      margin-bottom: 25px;
+      font-size: 42px;
+      line-height: 1.1;
+    }
+
+    .poster-text p {
+      color: #666;
+      font-size: 17px;
+      line-height: 2;
+    }
+
+    .poster-image {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 25px;
+      min-width: 400px;
+    }
+
+    .poster-image img {
+      width: 240px;
+      border-radius: 25px;
+      box-shadow: 0 30px 70px rgba(0, 0, 0, .15);
+      transition: .5s;
+    }
+
+    .poster-image img:hover {
+      transform: translateY(-10px);
+    }
+
+    .magazine-section {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 80px;
+      flex-wrap: wrap;
+      padding: 120px 12%;
+    }
+
+    .magazine-text {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .magazine-gallery {
+      position: relative;
+      flex: 1;
+      min-width: 350px;
+      height: 500px;
+    }
+
+    .magazine-gallery img {
+      position: absolute;
+      width: 270px;
+      border-radius: 22px;
+      box-shadow: 0 30px 70px rgba(0, 0, 0, .15);
+      transition: .5s;
+    }
+
+    .magazine-gallery img:hover {
+      transform: translateY(-15px) scale(1.05);
+      z-index: 10;
+    }
+
+    .magazine-btn,
+    .goods-btn {
+      margin-top: 35px;
+      padding: 16px 35px;
+      border: none;
+      border-radius: 50px;
+      background: black;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: .35s;
+    }
+
+    .magazine-btn:hover,
+    .goods-btn:hover {
+      background: #ff3131;
+      transform: translateY(-4px);
+    }
+
+    .big-word {
+      font-size: 60px;
+      font-weight: 900;
+      letter-spacing: -2px;
+    }
+
+    .about-highlight {
+      position: relative;
+      margin: 120px 5%;
+      padding: 160px 12%;
+      overflow: hidden;
+      border-radius: 45px;
+      background: black;
+      color: white;
+    }
+
+    .about-highlight::after {
+      content: "TOMATO";
+      position: absolute;
+      right: -30px;
+      bottom: -70px;
+      font-size: 220px;
+      font-weight: 900;
+      letter-spacing: -10px;
+      opacity: .05;
+    }
+
+    .about-highlight h2 {
+      position: relative;
+      z-index: 2;
+      margin-bottom: 40px;
+      font-size: 55px;
+      line-height: 1.1;
+    }
+
+    .about-highlight .big-word {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 90px;
+      font-weight: 900;
+      letter-spacing: -4px;
+    }
+
+    .about-highlight .description {
+      position: relative;
+      z-index: 2;
+      max-width: 850px;
+      color: #d9d9d9;
+      font-size: 19px;
+      line-height: 2.2;
+    }
+
+    .m1 {
+      left: 0;
+      top: 100px;
+      transform: rotate(-7deg);
+    }
+
+    .m2 {
+      left: 120px;
+      top: 0;
+      z-index: 2;
+    }
+
+    .m3 {
+      left: 250px;
+      top: 120px;
+      transform: rotate(7deg);
+    }
+
+    .team-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+      gap: 30px;
+      flex-wrap: wrap;
+      width: 100%;
+      margin-top: 60px;
+    }
+
+    .team-box {
+      width: 300px;
+      padding: 35px;
+      border: 1px solid #eaeaea;
+      border-radius: 28px;
+      background: white;
+      text-align: left;
+      transition: .4s;
+    }
+
+    .team-box:hover {
+      transform: translateY(-10px);
+      border-color: black;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, .08);
+    }
+
+    .team-box h3 {
+      margin-bottom: 20px;
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -.5px;
+    }
+
+    .team-box p {
+      color: #666;
+      font-size: 14px;
+      line-height: 2.1;
+    }
+
+    .team-box::before {
+      content: "TEAM";
+      display: block;
+      margin-bottom: 15px;
+      color: #999;
+      font-size: 11px;
+      letter-spacing: 3px;
+    }
+
+    .goods-section {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 80px;
+      flex-wrap: wrap;
+      padding: 120px 12%;
+    }
+
+    .goods-text {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .goods-gallery {
+      position: relative;
+      flex: 1;
+      min-width: 350px;
+      height: 500px;
+    }
+
+    .goods-gallery img {
+      position: absolute;
+      width: 280px;
+      border-radius: 25px;
+      box-shadow: 0 30px 70px rgba(0, 0, 0, .15);
+      transition: .5s;
+    }
+
+    .goods-gallery img:hover {
+      transform: translateY(-15px) scale(1.04);
+      z-index: 10;
+    }
+
+    .g1 {
+      left: 0;
+      top: 80px;
+      transform: rotate(-8deg);
+    }
+
+    .g2 {
+      left: 120px;
+      top: 0;
+      z-index: 2;
+    }
+
+    .g3 {
+      left: 240px;
+      top: 120px;
+      transform: rotate(8deg);
+    }
+
+    @keyframes slideRight {
+      from {
+        opacity: 0;
+        transform: translate(200px, -50%);
+      }
+
+      to {
+        opacity: 1;
+        transform: translate(0, -50%);
+      }
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(-150px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @media (max-width: 700px) {
+      .hero-content h1 {
+        font-size: 45px;
+      }
+
+      h2 {
+        font-size: 30px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="hero">
+    <div class="hero-content">
+      <div class="big-title">
+        TOMATO<br>
+        SERVICE.
+      </div>
+
+      <p class="subtitle">지금 필요한 건, 토마토.</p>
+
+      <button type="button" onclick="goAbout()">모임 알아보기</button>
+    </div>
+
+    <div class="hero-image">
+      <img src="title.jpg" alt="">
+    </div>
+  </header>
+
+  <nav>
+    <a href="#about">소개</a>
+    <a href="#activity">활동</a>
+    <a href="#join">가입</a>
+  </nav>
+
+  <section id="about" class="about-highlight">
+    <h2><span class="big-word">뭐하는</span> 집단인가요?</h2>
+
+    <p class="description">
+      토마토서비스는 서로 다른 전공의 학생들이 모여
+      '토마토'를 주제로 연구와 콘텐츠 제작을 진행하는
+      융합 협업 프로젝트입니다.
+
+      토마토를 주제로 한 학술 연구 결과를 매거진으로 발행하고,
+      이를 기반으로 굿즈를 기획·제작하여 온·오프라인으로 확장합니다.
+
+      연구, 디자인, 개발, 기획과 제작이 하나의 흐름으로 연결되는 과정 속에서
+      실제 프로젝트 기반의 협업 경험과 실무 역량 성장을 목표로 합니다.
+    </p>
+  </section>
+
+  <section id="activity">
+    <h2>주요 활동</h2>
+
+    <div class="card-wrap">
+      <div class="card">
+        <h3>매거진 연재</h3>
+        <p>에디터팀과 디자인팀의 협업 하에 주기적인 인스타 매거진 연재</p>
+      </div>
+
+      <div class="card">
+        <h3>굿즈 발매</h3>
+        <p>토마토를 주제로 굿즈를 발매</p>
+      </div>
+
+      <div class="card">
+        <h3>파티 기획</h3>
+        <p>특별한 프로젝트와 행사 진행</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="poster-section">
+    <div class="poster-text">
+      <div class="small-title">1ST POP-UP</div>
+
+      <h2>홍익대학교 대동제 부스운영 프로젝트</h2>
+
+      <p>
+        토마토서비스는 홍익대학교 축제 기간 동안
+        오프라인 팝업 부스를 운영하며
+        프로젝트와 굿즈를 직접 소개했습니다.
+
+        연구와 콘텐츠가 실제 공간으로
+        확장되는 경험을 만들었습니다.
+      </p>
+    </div>
+
+    <div class="poster-image">
+      <img src="aaa2.jpg" class="poster1" alt="">
+      <img src="aaa.png" class="poster2" alt="">
+    </div>
+  </section>
+
+  <section class="goods-section">
+    <div class="goods-text">
+      <div class="small-title">GOODS RELEASE</div>
+
+      <h2>굿즈 발매</h2>
+
+      <p>
+        토마토서비스는 프로젝트의 결과물을
+        실제 굿즈로 확장합니다.
+
+        핀뱃지, 라이터, 티셔츠 등
+        토마토를 주제로 한 아이템을 기획하고 제작하여
+        온·오프라인에서 선보였습니다.
+      </p>
+
+      <button type="button" class="goods-btn">굿즈 구매하러가기</button>
+    </div>
+
+    <div class="goods-gallery">
+      <img src="b1.jpg" class="g1" alt="">
+      <img src="b2.jpg" class="g2" alt="">
+      <img src="b3.jpg" class="g3" alt="">
+    </div>
+  </section>
+
+  <section class="magazine-section">
+    <div class="magazine-text">
+      <div class="small-title">INSTAGRAM MAGAZINE</div>
+
+      <h2>인스타 매거진</h2>
+
+      <p>
+        토마토서비스는 연구와 프로젝트 결과를
+        인스타그램 매거진 형태의 콘텐츠로 확장합니다.
+
+        에디터와 디자이너가 함께 제작한 시리즈를 통해
+        토마토를 다양한 시선으로 해석하고,
+        쉽고 흥미로운 방식으로 전달합니다.
+      </p>
+
+      <a href="https://www.instagram.com/tmto.service/" target="_blank" rel="noopener noreferrer">
+        <button type="button" class="magazine-btn">매거진 보러가기</button>
+      </a>
+    </div>
+
+    <div class="magazine-gallery">
+      <img src="c1.png" class="m1" alt="">
+      <img src="c2.png" class="m2" alt="">
+      <img src="c3.png" class="m3" alt="">
+    </div>
+  </section>
+
+  <section id="team">
+    <h2>Team</h2>
+
+    <div class="team-wrap">
+      <div class="team-box">
+        <h3>Central</h3>
+        <p>
+          총괄 김준아 · 이지구<br>
+          총무 최성빈<br>
+          기획 정승일 · 구경환
+        </p>
+      </div>
+
+      <div class="team-box">
+        <h3>Design Team</h3>
+        <p>
+          팀장 염유빈<br>
+          팀원 안유진 · 박준하
+        </p>
+      </div>
+
+      <div class="team-box">
+        <h3>Fashion Team</h3>
+        <p>
+          팀장 이영서<br>
+          팀원 김민아 · 박지수
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="join" class="join">
+    <h2>가입 요건</h2>
+    <p>토마토를 사랑하는 마음</p>
+
+    <button type="button" onclick="join()">가입하러 가기</button>
+  </section>
+
+  <footer>
+    © 2026 @tmto.service
+  </footer>
+
+  <script>
+    function join() {
+      alert("굿즈 구매 페이지 준비 중");
+    }
+
+    function goAbout() {
+      document.getElementById("about").scrollIntoView();
+    }
+  </script>
+</body>
+</html>
